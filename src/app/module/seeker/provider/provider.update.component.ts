@@ -1,103 +1,61 @@
 import {Component} from '@angular/core';
-import {ProviderService} from "./provider.service";
 import {FormBuilder, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
-import {LookupResponse, ProviderRequest, ProviderResponse, ProviderResponsePage} from "../../../openapi";
-import {LookupService} from "../../lookup/lookup.service";
+import {ProviderService} from "./provider.service";
+import {ProviderRequest, ProviderResponse} from "../../../openapi";
 
 @Component({
-  selector: 'app-lookup-update',
-  templateUrl: './provider.update.component.html'
+    selector: 'app-lookup-update',
+    templateUrl: './provider.update.component.html'
 })
 export class ProviderUpdateComponent {
 
-  isSaving = false;
-  defaultColDef: any;
-  gridApi?: any;
-  gridColumnApi?: any;
-  columnDefs?: any;
-  rowSelection = 'multiple';
-  rowData: Array<LookupResponse>;
+    isSaving = false;
 
+    editForm = this.fb.group({
+        summary: [null, [Validators.required]],
+        description: [null, [Validators.required]]
+    });
 
-  editForm = this.fb.group({
-    name: [null, [Validators.required]],
-    currentAddress: [null, [Validators.required]],
-    reference: [null]
-  });
+    constructor(private service: ProviderService, private fb: FormBuilder, private router: Router) {
 
-  constructor(protected service: ProviderService, protected lookupService: LookupService, private fb: FormBuilder, private router: Router) {
-    this.columnDefs = this.getColumnDef();
-  }
-
-  previousState(): void {
-    this.router.navigate(['provider']);
-  }
-
-  save(): void {
-    this.isSaving = true;
-    const provider = this.createFromForm();
-    let codes = [];
-    for (const lookup of this.gridApi.getSelectedRows()) {
-      codes.push({code: lookup.code});
     }
-    provider.provides = codes;
-    this.subscribeToSaveResponse(this.service.save(provider));
-  }
 
-  private createFromForm(): ProviderRequest {
-    return {
-      name: this.editForm.get(['name'])!.value,
-      currentAddress: this.editForm.get(['currentAddress'])!.value,
-      reference: this.editForm.get(['reference'])!.value,
-      provides: []
+    previousState(): void {
+        this.router.navigate(['provider']);
     }
-  }
 
-  protected subscribeToSaveResponse(result: Observable<ProviderResponse>): void {
-    result.subscribe(
-      () => this.onSaveSuccess(),
-      () => this.onSaveError()
-    );
-  }
+    save(): void {
+        this.isSaving = true;
+        const lookUp = this.createFromForm();
+        this.subscribeToSaveResponse(this.service.save(lookUp));
+    }
 
-  protected onSaveSuccess(): void {
-    this.isSaving = false;
-    this.previousState();
-  }
+    private createFromForm(): ProviderRequest {
+        return {
+            provides: {
+                summary: this.editForm.get(['summary'])!.value,
+                description: this.editForm.get([('description')])!.value
+            }
+        }
+    }
 
-  protected onSaveError(): void {
-    this.isSaving = false;
-    alert('got some error response')
-  }
+    protected subscribeToSaveResponse(result: Observable<ProviderResponse>): void {
+        result.subscribe(
+            () => this.onSaveSuccess(),
+            () => this.onSaveError()
+        );
+    }
 
+    protected onSaveSuccess(): void {
+        this.isSaving = false;
+        this.previousState();
+    }
 
-  public onGridReady($event: any): void {
-    this.gridApi = $event.api;
-    this.gridColumnApi = $event.gridColumnApi;
-    this.lookupService.query().subscribe((response) => this.onSuccess(response), (response) => this.onFail(response));
-  }
-
-
-  private onSuccess(response: ProviderResponsePage): void {
-    this.rowData = response.content;
-    this.gridApi.refreshCells();
-  }
-
-  private onFail(response: any): void {
-
-  }
-
-  protected getColumnDef(): any {
-    const cols = [
-      {headerName: 'Category', field: 'category'},
-      {headerName: 'Code', field: 'code', checkboxSelection: true},
-      {headerName: 'Description', field: 'description'},
-      {headerName: 'Additional Info', field: 'additionalInfo'}
-    ];
-    return cols;
-  }
+    protected onSaveError(): void {
+        this.isSaving = false;
+    }
 
 
 }

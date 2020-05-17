@@ -1,14 +1,20 @@
-<div class="card">
-    <div class="card-header">
-        <h2 id="page-heading">
-            <button id="jh-create-entity" class="btn btn-primary float-right" [routerLink]="['/provider/new']">
-        <span>
-            New Provider
-            </span>
-            </button>
-        </h2>
-    </div>
-
-    <div class="card-body">
+<app-basicelements></app-basicelements>
+<div class="section">
+    <div class="container" *ngFor="let provider of providers">
+        <div class="row justify-content-md-center">
+            <div class="col-md-12 col-lg-12">
+                <h4>{{provider.provides.summary}} , {{provider.name}} </h4>
+                <h5 class="description">{{provider.provides.description}}</h5>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button class="btn btn-info" (click)="markInterested(provider.provides.uuid)">Interested</button>
+                    <button class="btn btn-success">Success</button>
+                    <button class="btn btn-warning">Report</button>
+                    <button class="btn btn-danger">Invalid</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+

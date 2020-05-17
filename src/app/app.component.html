@@ -1,2 +1,37 @@
 <app-navbar></app-navbar>
-<router-outlet></router-outlet>
+<div class="wrapper">
+    <div class="main">
+        <router-outlet></router-outlet>
+    </div>
+    <footer class="footer" data-background-color="black">
+        <div class="container">
+            <nav>
+                <ul>
+                    <li>
+                        <a href="https://www.creative-tim.com">
+                            eaglessore
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.creative-tim.com/about-us">
+                            About Us
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://blog.creative-tim.com">
+                            Blog
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="copyright">
+                &copy;
+                {{data | date: 'yyyy'}}, Designed by
+                <a href="https://www.invisionapp.com" target="_blank">Invision</a>. Coded by
+                <a href="https://www.creative-tim.com" target="_blank">eaglessoar</a>.
+            </div>
+        </div>
+    </footer>
+</div>
+
+

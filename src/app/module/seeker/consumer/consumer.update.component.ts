@@ -5,96 +5,80 @@ import {Router} from "@angular/router";
 import {Observable} from "rxjs";
 import {ConsumerRequest, ConsumerResponse, LookupResponse, ProviderResponsePage} from "../../../openapi";
 import {LookupService} from "../../lookup/lookup.service";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
-  selector: 'app-lookup-update',
-  templateUrl: './consumer.update.component.html'
+    selector: 'app-lookup-update',
+    templateUrl: './consumer.update.component.html'
 })
 export class ConsumerUpdateComponent {
-  isSaving = false;
-  defaultColDef: any;
-  gridApi?: any;
-  gridColumnApi?: any;
-  columnDefs?: any;
-  rowSelection = 'multiple';
-  rowData: Array<LookupResponse>;
+    isSaving = false;
+    defaultColDef: any;
+    gridApi?: any;
+    gridColumnApi?: any;
+    columnDefs?: any;
+    rowSelection = 'multiple';
+    rowData: Array<LookupResponse>;
 
 
-  editForm = this.fb.group({
-    name: [null, [Validators.required]],
-    address: [null, [Validators.required]],
-    reference: [null]
-  });
+    editForm = this.fb.group({
+        name: [null, [Validators.required]],
+        address: [null, [Validators.required]],
+        reference: [null]
+    });
 
-  constructor(protected service: ConsumerService, protected lookupService: LookupService, private fb: FormBuilder, private router: Router) {
-  }
-
-  previousState(): void {
-  }
-
-  save(): void {
-    this.isSaving = true;
-    const consumer = this.createFromForm();
-    let codes = [];
-    for (const lookup of this.gridApi.getSelectedRows()) {
-      codes.push({code: lookup.code});
+    constructor(protected service: ConsumerService, protected lookupService: LookupService, private fb: FormBuilder, private router: Router) {
     }
-    consumer.consumes = codes;
-    this.subscribeToSaveResponse(this.service.save(consumer));
-  }
 
-  private createFromForm(): ConsumerRequest {
-    return {
-      name: this.editForm.get(['name'])!.value,
-      address: this.editForm.get(['address'])!.value,
-      reference: this.editForm.get(['reference'])!.value,
-      consumes: []
+    previousState(): void {
     }
-  }
 
-  protected subscribeToSaveResponse(result: Observable<ConsumerResponse>): void {
-    result.subscribe(
-      () => this.onSaveSuccess(),
-      () => this.onSaveError()
-    );
-  }
-
-  protected onSaveSuccess(): void {
-    this.isSaving = false;
-    this.previousState();
-  }
-
-  protected onSaveError(): void {
-    this.isSaving = false;
-    alert('got some error response')
-  }
+    save(): void {
+        this.isSaving = true;
+    }
 
 
-  public onGridReady($event: any): void {
-    this.gridApi = $event.api;
-    this.gridColumnApi = $event.gridColumnApi;
-    this.lookupService.query().subscribe((response) => this.onSuccess(response), (response) => this.onFail(response));
-  }
+    protected subscribeToSaveResponse(result: Observable<ConsumerResponse>): void {
+        result.subscribe(
+            () => this.onSaveSuccess(),
+            () => this.onSaveError()
+        );
+    }
+
+    protected onSaveSuccess(): void {
+        this.isSaving = false;
+        this.previousState();
+    }
+
+    protected onSaveError(): void {
+        this.isSaving = false;
+        alert('got some error response')
+    }
 
 
-  private onSuccess(response: ProviderResponsePage): void {
-    this.rowData = response.content;
-    this.gridApi.refreshCells();
-  }
+    public onGridReady($event: any): void {
+        this.gridApi = $event.api;
+        this.gridColumnApi = $event.gridColumnApi;
+        this.lookupService.query().subscribe((response) => this.onSuccess(response), (response) => this.onFail(response));
+    }
 
-  private onFail(response: any): void {
 
-  }
+    private onSuccess(response: ProviderResponsePage): void {
+        this.rowData = response.content;
+        this.gridApi.refreshCells();
+    }
 
-  protected getColumnDef(): any {
-    const cols = [
-      {headerName: 'Category', field: 'category'},
-      {headerName: 'Code', field: 'code', checkboxSelection: true},
-      {headerName: 'Description', field: 'description'},
-      {headerName: 'Additional Info', field: 'additionalInfo'}
-    ];
-    return cols;
-  }
+    private onFail(response: any): void {
+
+    }
+
+    protected getColumnDef(): any {
+        const cols = [
+            {headerName: 'Category', field: 'category'},
+            {headerName: 'Code', field: 'code', checkboxSelection: true},
+            {headerName: 'Description', field: 'description'},
+            {headerName: 'Additional Info', field: 'additionalInfo'}
+        ];
+        return cols;
+    }
 
 }
