@@ -1,20 +1,36 @@
-<app-basicelements></app-basicelements>
-<div class="section">
-    <div class="container" *ngFor="let provider of providers">
-        <div class="row justify-content-md-center">
-            <div class="col-md-12 col-lg-12">
-                <h4>{{provider.provides.summary}} , {{provider.name}} </h4>
-                <h5 class="description">{{provider.provides.description}}</h5>
-            </div>
+<div class="section section-basic">
+    <div class="container">
+        <h3 class="title">Simple Connect</h3>
+        <h3 class="title">Connect should be simpler</h3>
+        <div id="inputs">
+            <h4>What are you looking for ?</h4>
             <div class="row">
-                <div class="col-md-12">
-                    <button class="btn btn-info" (click)="markInterested(provider.provides.uuid)">Interested</button>
-                    <button class="btn btn-success">Success</button>
-                    <button class="btn btn-warning">Report</button>
-                    <button class="btn btn-danger">Invalid</button>
+                <div class="col-sm-7 col-lg-12">
+                    <div class="form-group">
+                        <input #searchBox type="text" placeholder="job food car expert " class="form-control"
+                               (keyup.enter)="search(searchBox.value)"/>
+                    </div>
+                    <h4> showing result {{pageInfo.totalElements}} of {{pageInfo.totalElements}} </h4>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<div class="section">
+    <div class="container" *ngFor="let provider of providers; let i = index" [attr.data-index]="i">
+
+        <div class="row justify-content-md-center">
+            <div class="col-md-12 col-lg-12" [routerLink]="[provider.id]">
+                <h4>{{provider.summary}} , {{provider.name}} <i
+                        class="now-ui-icons btn-sm ui-2_like"></i> {{provider.interestCount}} </h4>
+            </div>
+
+            <div class="col-md-12">
+                <button class="btn btn-info" (click)="markInterested(provider.id, i)">Interested</button>
+                <button class="btn btn-warning" [routerLink]="['/consumer', 'fbLogin']">Report Spam</button>
+            </div>
+        </div>
+
     </div>
 </div>
 

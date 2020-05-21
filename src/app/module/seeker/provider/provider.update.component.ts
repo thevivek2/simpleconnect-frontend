@@ -34,10 +34,8 @@ export class ProviderUpdateComponent {
 
     private createFromForm(): ProviderRequest {
         return {
-            provides: {
-                summary: this.editForm.get(['summary'])!.value,
-                description: this.editForm.get([('description')])!.value
-            }
+            summary: this.editForm.get(['summary'])!.value,
+            description: this.editForm.get([('description')])!.value
         }
     }
 

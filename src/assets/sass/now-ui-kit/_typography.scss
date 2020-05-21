@@ -91,6 +91,9 @@ p{
 .footer-big p{
     color: black;
     font-weight: $font-weight-light;
+    white-space: pre-wrap;
+    text-align: justify;
+    text-justify: inter-word;
 }
 .category{
     text-transform: uppercase;

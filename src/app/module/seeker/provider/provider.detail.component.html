@@ -1,0 +1,17 @@
+<div class="section">
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-md-12 col-lg-12">
+                <h4>{{provider.summary}} , {{provider.name}} <i
+                        class="now-ui-icons btn-sm ui-2_like"></i> {{provider.interestCount}} </h4>
+                <h5 class="description">{{provider.description}}</h5>
+            </div>
+
+            <div class="col-md-12">
+                <button class="btn btn-info">Interested</button>
+                <button class="btn btn-warning" [routerLink]="['/consumer', 'fbLogin']">Report Spam</button>
+            </div>
+        </div>
+
+    </div>
+</div>

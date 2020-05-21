@@ -6,11 +6,7 @@ import {RouterModule} from '@angular/router';
     RouterModule.forChild([
       {
         path: '',
-        redirectTo: 'lookup', pathMatch: 'full'
-      },
-      {
-        path: 'lookup',
-        loadChildren: () => import('./module/lookup/lookup.module').then(m => m.LookupModule)
+        redirectTo: 'provider', pathMatch: 'full'
       },
       {
         path: 'provider',
@@ -19,7 +15,7 @@ import {RouterModule} from '@angular/router';
       {
         path: 'consumer',
         loadChildren: () => import('./module/seeker/consumer/consumer.module').then(m => m.ConsumerModule)
-      }
+      },
     ])
   ],
 })

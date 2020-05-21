@@ -3,8 +3,7 @@ import {ConsumerService} from "./consumer.service";
 import {FormBuilder, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
-import {ConsumerRequest, ConsumerResponse, LookupResponse, ProviderResponsePage} from "../../../openapi";
-import {LookupService} from "../../lookup/lookup.service";
+import {ConsumerResponse} from "../../../openapi";
 
 @Component({
     selector: 'app-lookup-update',
@@ -12,13 +11,6 @@ import {LookupService} from "../../lookup/lookup.service";
 })
 export class ConsumerUpdateComponent {
     isSaving = false;
-    defaultColDef: any;
-    gridApi?: any;
-    gridColumnApi?: any;
-    columnDefs?: any;
-    rowSelection = 'multiple';
-    rowData: Array<LookupResponse>;
-
 
     editForm = this.fb.group({
         name: [null, [Validators.required]],
@@ -26,7 +18,7 @@ export class ConsumerUpdateComponent {
         reference: [null]
     });
 
-    constructor(protected service: ConsumerService, protected lookupService: LookupService, private fb: FormBuilder, private router: Router) {
+    constructor(protected service: ConsumerService, private fb: FormBuilder, private router: Router) {
     }
 
     previousState(): void {
@@ -52,19 +44,6 @@ export class ConsumerUpdateComponent {
     protected onSaveError(): void {
         this.isSaving = false;
         alert('got some error response')
-    }
-
-
-    public onGridReady($event: any): void {
-        this.gridApi = $event.api;
-        this.gridColumnApi = $event.gridColumnApi;
-        this.lookupService.query().subscribe((response) => this.onSuccess(response), (response) => this.onFail(response));
-    }
-
-
-    private onSuccess(response: ProviderResponsePage): void {
-        this.rowData = response.content;
-        this.gridApi.refreshCells();
     }
 
     private onFail(response: any): void {

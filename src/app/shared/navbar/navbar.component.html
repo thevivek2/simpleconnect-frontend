@@ -8,19 +8,19 @@
               <span class="button-bar"></span>
           </a>
            <div ngbDropdownMenu>
-             <a class="dropdown-header">Dropdown header</a>
-             <a class="dropdown-item" href="#">Action</a>
-             <a class="dropdown-item" href="#">Another action</a>
-             <a class="dropdown-item" href="#">Something else here</a>
+             <a class="dropdown-header">Interested</a>
+             <a class="dropdown-item" href="#">Who we are</a>
+             <a class="dropdown-item" href="#">Why simple connect</a>
+             <a class="dropdown-item" href="#">How it works</a>
              <div class="dropdown-divider"></div>
-             <a class="dropdown-item" href="#">Separated link</a>
+             <a class="dropdown-item" href="#">Join us</a>
              <div class="dropdown-divider"></div>
-             <a class="dropdown-item" href="#">One more separated link</a>
+             <a class="dropdown-item" href="#">Support Us</a>
            </div>
          </div>
       </div>
         <div class="navbar-translate">
-            <a class="navbar-brand" [routerLink]="['/lookup']" placement="bottom" ngbTooltip="Designed by Invision. Coded by Egalessoar">
+            <a class="navbar-brand" [routerLink]="['/provider']" placement="bottom" ngbTooltip="Designed by Invision. Coded by Egalessoar">
                 Simple Connect 0.0.1-SNAPSHOT
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation" (click)="sidebarToggle()">
@@ -32,17 +32,11 @@
         <div class="collapse navbar-collapse" data-nav-image="assets/img/blurred-image-1.jpg" data-color="orange">
             <ul class="navbar-nav ml-auto">
               <li class="nav-item">
-                  <a class="nav-link" [routerLink]="['provider/new']">
+                  <a class="nav-link" [routerLink]="['provider']">
                       <i class="now-ui-icons arrows-1_cloud-download-93"></i>
-                      <p>Download</p>
+                      <p>What's Trending</p>
                   </a>
               </li>
-                <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['provider/new']">
-                      <i class="now-ui-icons files_paper"></i>
-                      <p>Post Interest</p>
-                    </a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link btn btn-neutral" [routerLink]="['provider/new']">
                         <i class="now-ui-icons arrows-1_share-66"></i>
